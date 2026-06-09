@@ -1,0 +1,71 @@
+<section class="calendar-section">
+
+  <header class="calendar-title-header">
+    <div class="calendar-title-row">
+      <div class="calendar-title-text">
+        <span class="calendar-eyebrow">Planificación mensual</span>
+        <h2>Calendario académico</h2>
+        <p>Visualizá tus tareas, entregas y eventos importantes del mes.</p>
+      </div>
+      <button class="back-button" type="button" (click)="goBack()">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Volver
+      </button>
+    </div>
+  </header>
+
+  <section class="calendar-card">
+
+    <header class="calendar-header">
+      <h3>{{ currentMonthName }}</h3>
+      <div class="calendar-actions">
+        <button class="calendar-nav-button" type="button" aria-label="Mes anterior" (click)="prevMonth()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="calendar-today-button" type="button" (click)="goToToday()">Hoy</button>
+        <button class="calendar-nav-button" type="button" aria-label="Mes siguiente" (click)="nextMonth()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="calendar-weekdays">
+      <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span>
+      <span>Vie</span><span>Sáb</span><span>Dom</span>
+    </div>
+
+    <div class="calendar-grid">
+      @for (day of calendarDays; track day.date) {
+        <article
+          class="calendar-day"
+          [class.calendar-day--muted]="day.muted"
+          [class.calendar-day--today]="day.isToday"
+        >
+          <span class="day-number">{{ day.date.getDate() }}</span>
+
+          @if (!day.muted && day.tasks.length > 0) {
+            <div class="calendar-events">
+              @for (task of day.tasks; track task.id) {
+                <div
+                  class="calendar-event {{ getEventClass(task) }}"
+                  (click)="openTaskModal(task, $event)"
+                >
+                  {{ task.title }}
+                </div>
+              }
+            </div>
+          }
+        </article>
+      }
+    </div>
+
+  </section>
+
+</section>
+
+<app-task-modal
+  #taskModal
+  (taskUpdated)="loadTasks()">
+</app-task-modal>

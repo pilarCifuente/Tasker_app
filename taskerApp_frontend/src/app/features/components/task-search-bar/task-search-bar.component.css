@@ -1,0 +1,136 @@
+.task-search-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .search-box {
+    min-height: 50px;
+    padding: 0 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow:
+      0 12px 30px rgba(15, 23, 42, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition:
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      background 0.18s ease;
+  }
+  
+  .search-box:focus-within {
+    border-color: rgba(79, 70, 229, 0.55);
+    background: #ffffff;
+    box-shadow:
+      0 16px 34px rgba(79, 70, 229, 0.11),
+      0 0 0 4px rgba(79, 70, 229, 0.10);
+  }
+  
+  .search-icon {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+  }
+  
+  .search-icon svg,
+  .filter-button svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  
+  .search-box input {
+    width: 100%;
+    height: 100%;
+    min-height: 48px;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: #0f172a;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  
+  .search-box input::placeholder {
+    color: #94a3b8;
+    font-weight: 500;
+  }
+  
+  .filter-button {
+    width: 50px;
+    height: 50px;
+    border: 0;
+    border-radius: 18px;
+    background: #ffffff;
+    color: #334155;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow:
+      0 12px 30px rgba(15, 23, 42, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      transform 0.18s ease,
+      background 0.18s ease,
+      color 0.18s ease,
+      box-shadow 0.18s ease,
+      border-color 0.18s ease;
+  }
+  
+  .filter-button svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .filter-button:hover {
+    transform: translateY(-2px);
+    background: #eef2ff;
+    color: #4f46e5;
+    border-color: #c7d2fe;
+    box-shadow:
+      0 16px 34px rgba(79, 70, 229, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+  
+  .filter-button:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    .task-search-wrapper {
+      grid-template-columns: 1fr;
+    }
+  
+    .filter-button {
+      width: 100%;
+    }
+  }
+
+  .task-search-wrapper {
+    width: 100%;
+  }
+  
+  .search-box {
+    width: 100%;
+  }
+  :host {
+    display: block;
+    width: 100%;
+  }

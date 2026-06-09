@@ -1,0 +1,138 @@
+<section class="tasks-dashboard">
+
+  <header class="dashboard-header">
+    <div class="header-left">
+      <div class="module-badge">
+        <span></span>
+        Gestión de tareas
+      </div>
+
+      <h1>Mis tareas</h1>
+
+      <p>
+        Organizá, priorizá y seguí el avance de tus actividades diarias.
+      </p>
+
+      <div class="header-meta">
+        <span>{{ currentDate | date:'EEEE, d \'de\' MMMM yyyy':'':'es-AR' }}</span>
+        <span>{{ activeTasksCount }} {{ activeTasksCount === 1 ? 'tarea activa' : 'tareas activas' }}</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="secondary-button" type="button" (click)="goToCalendar()">
+        Ver calendario
+      </button>
+
+      <button class="new-task-button" type="button" (click)="taskModal.open()">
+        <span>+</span>
+        Nueva tarea
+      </button>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+
+    <app-task-stats [tasks]="tasks"></app-task-stats>
+
+    <div class="search-filter-row">
+      <app-task-search-bar (searchChanged)="onSearchChanged($event)"></app-task-search-bar>
+
+      <button
+        class="filter-toggle-button"
+        type="button"
+        [class.active]="isDateFilterActive"
+        (click)="toggleDateFilter()"
+        aria-label="Filtrar">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5h16l-6 7v5l-4 2v-7L4 5z"/>
+        </svg>
+        @if (isDateFilterActive) {
+          <span class="filter-dot"></span>
+        }
+      </button>
+    </div>
+
+    @if (showDateFilter) {
+      <div class="date-filter-panel">
+
+        <div class="date-filter-fields">
+          <div class="date-filter-group">
+            <label for="date-from">Desde</label>
+            <input id="date-from" type="date" [(ngModel)]="dateFrom" />
+          </div>
+          <div class="date-filter-group">
+            <label for="date-to">Hasta</label>
+            <input id="date-to" type="date" [(ngModel)]="dateTo" />
+          </div>
+        </div>
+
+        <div class="date-filter-divider"></div>
+
+        <div class="priority-filter-group">
+          <span class="priority-filter-label">Prioridad</span>
+          <div class="priority-chips">
+            <button
+              type="button"
+              class="priority-chip chip-high"
+              [class.selected]="selectedPriorities.includes('HIGH')"
+              (click)="togglePriority('HIGH')">
+              Alta
+            </button>
+            <button
+              type="button"
+              class="priority-chip chip-medium"
+              [class.selected]="selectedPriorities.includes('MEDIUM')"
+              (click)="togglePriority('MEDIUM')">
+              Media
+            </button>
+            <button
+              type="button"
+              class="priority-chip chip-low"
+              [class.selected]="selectedPriorities.includes('LOW')"
+              (click)="togglePriority('LOW')">
+              Baja
+            </button>
+          </div>
+        </div>
+
+        @if (isDateFilterActive) {
+          <button class="date-filter-clear" type="button" (click)="clearDateFilter()">
+            Limpiar
+          </button>
+        }
+
+      </div>
+    }
+
+    <section class="tasks-section">
+      <div class="section-header">
+        <div>
+          <span class="section-label">Listado principal</span>
+          <h2>Tareas recientes</h2>
+        </div>
+
+        <div class="section-actions">
+          <button type="button" [class.active]="activeFilter === 'ALL'"         (click)="setFilter('ALL')">Todas</button>
+          <button type="button" [class.active]="activeFilter === 'PENDING'"     (click)="setFilter('PENDING')">Pendientes</button>
+          <button type="button" [class.active]="activeFilter === 'IN_PROGRESS'" (click)="setFilter('IN_PROGRESS')">En progreso</button>
+          <button type="button" [class.active]="activeFilter === 'COMPLETED'"   (click)="setFilter('COMPLETED')">Completadas</button>
+        </div>
+      </div>
+
+      <app-task-list
+        [tasks]="filteredTasks"
+        (taskDeleted)="loadTasks()"
+        (editTask)="taskModal.openForEdit($event)">
+      </app-task-list>
+    </section>
+
+  </div>
+
+</section>
+
+<app-task-modal
+  #taskModal
+  (taskCreated)="loadTasks()"
+  (taskUpdated)="loadTasks()">
+</app-task-modal>

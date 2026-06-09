@@ -1,0 +1,101 @@
+.task-stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 14px;
+  }
+  
+  .stat-card {
+    min-height: 78px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow:
+      0 14px 30px rgba(15, 23, 42, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+  
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top right, rgba(255, 255, 255, 0.18), transparent 36%);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 18px 38px rgba(15, 23, 42, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  
+  .stat-label,
+  .stat-value {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .stat-label {
+    font-size: 0.78rem;
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.86);
+  }
+  
+  .stat-value {
+    font-size: 1.45rem;
+    line-height: 1;
+    font-weight: 950;
+    color: #ffffff;
+    letter-spacing: -0.04em;
+  }
+  
+  .stat-total {
+    background: linear-gradient(135deg, #334155, #0f172a);
+  }
+  
+  .stat-pending {
+    background: linear-gradient(135deg, #475569, #1e293b);
+  }
+  
+  .stat-progress {
+    background: linear-gradient(135deg, #4f46e5, #312e81);
+  }
+  
+  .stat-completed {
+    background: linear-gradient(135deg, #059669, #065f46);
+  }
+  
+  @media (max-width: 768px) {
+    .task-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  
+    .stat-card {
+      min-height: 74px;
+      padding: 15px;
+      border-radius: 16px;
+    }
+  }
+  
+  @media (max-width: 420px) {
+    .task-stats {
+      grid-template-columns: 1fr;
+    }
+  }

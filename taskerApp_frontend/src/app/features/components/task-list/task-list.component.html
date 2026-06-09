@@ -1,0 +1,56 @@
+<div class="task-list">
+
+  @if (tasks.length === 0) {
+  <div class="task-state empty">
+    <p>No hay tareas para mostrar.</p>
+  </div>
+  }
+
+  @for (task of tasks; track task.id) {
+  <article class="task-card {{ getCardClass(task) }} {{ getPriorityClass(task.priority) }}">
+    <div class="task-status-indicator"></div>
+
+    <div class="task-main">
+      <div class="task-top">
+        <div>
+          <h3>{{ task.title }}</h3>
+          @if (task.description) {
+          <p>{{ task.description }}</p>
+          }
+        </div>
+        <span class="task-priority {{ task.priority.toLowerCase() }}">
+          {{ getPriorityLabel(task.priority) }}
+        </span>
+      </div>
+
+      <div class="task-footer">
+        <span class="task-status {{ getStatusClass(task.status) }}">
+          {{ getStatusLabel(task.status) }}
+        </span>
+        @if (task.dueDate || task.status === 'COMPLETED') {
+        <span class="task-date {{ getDueDateClass(task) }}">
+          {{ getDueDateLabel(task) }}
+        </span>
+        }
+      </div>
+    </div>
+
+    <div class="task-actions">
+      <button class="action-button edit" type="button" aria-label="Editar tarea" (click)="onEditClick(task)">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 20h9" />
+          <path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4 12.5-12.5z" />
+        </svg>
+      </button>
+
+      <button class="action-button delete" type="button" aria-label="Eliminar tarea" (click)="deleteTask(task.id!)">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 6L6 18" />
+          <path d="M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </article>
+  }
+
+</div>

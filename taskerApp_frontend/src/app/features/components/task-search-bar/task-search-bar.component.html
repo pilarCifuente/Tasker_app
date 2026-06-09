@@ -1,0 +1,27 @@
+<section class="task-search-wrapper">
+
+  <div class="search-box">
+    <span class="search-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+    </span>
+
+    <input
+      type="text"
+      placeholder="Buscar tarea por nombre, descripción o estado..."
+      aria-label="Buscar tarea"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+    />
+
+    @if (searchTerm) {
+      <button class="clear-button" type="button" (click)="clearSearch()" aria-label="Limpiar búsqueda">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    }
+  </div>
+
+</section>
