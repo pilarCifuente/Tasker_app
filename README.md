@@ -1,9 +1,10 @@
 # TaskerApp
 
 TaskerApp es una aplicación web full stack desarrollada como versión inicial para portfolio.
+
 El objetivo del proyecto es demostrar la implementación de un flujo completo entre frontend, backend y base de datos, permitiendo gestionar tareas personales con persistencia real.
 
-La aplicación permite crear, listar, editar, eliminar, completar y organizar tareas, además de visualizarlas en un calendario según su fecha de vencimiento.
+La aplicación permite crear, listar, editar, eliminar, completar, organizar y visualizar tareas, además de mostrarlas en un calendario según su fecha de vencimiento.
 
 **Desarrollado por:** Pilar Cifuentes
 
@@ -21,6 +22,7 @@ El objetivo principal de TaskerApp es demostrar conocimientos prácticos de desa
 * Validaciones básicas.
 * Manejo centralizado de errores.
 * Comunicación real entre frontend y backend.
+* Visualización de tareas en dashboard y calendario.
 
 ---
 
@@ -36,9 +38,64 @@ La aplicación permite:
 * Marcar tareas como completadas.
 * Visualizar la prioridad de cada tarea.
 * Visualizar la fecha de vencimiento.
-* Buscar tareas por nombre.
+* Buscar tareas por nombre, descripción o estado.
 * Filtrar tareas por prioridad.
+* Filtrar tareas por fecha desde el frontend.
+* Filtrar tareas por rango de fechas.
 * Ver tareas dentro de una vista de calendario.
+* Visualizar métricas generales de tareas: total, pendientes, en proceso y completadas.
+
+---
+
+## Vista previa de la aplicación
+
+### Dashboard principal
+
+Vista principal de TaskerApp, donde se visualiza el resumen general de tareas, cantidad total, tareas pendientes, tareas en proceso y tareas completadas.
+
+<p align="center">
+  <img src="docs/images/dashboard-principal.jpeg" alt="Dashboard principal de TaskerApp" width="900">
+</p>
+
+---
+
+### Listado de tareas recientes
+
+El dashboard muestra las tareas cargadas con información visual sobre estado, prioridad y fecha de vencimiento. Desde esta vista se puede editar o eliminar cada tarea.
+
+<p align="center">
+  <img src="docs/images/dashboard-listado.jpeg" alt="Listado de tareas recientes en TaskerApp" width="900">
+</p>
+
+---
+
+### Filtros de búsqueda, fecha y prioridad
+
+La aplicación permite buscar tareas por texto, filtrar por prioridad y aplicar filtros por fecha desde el frontend.
+
+<p align="center">
+  <img src="docs/images/dashboard-filtros.jpeg" alt="Filtros de tareas en TaskerApp" width="900">
+</p>
+
+---
+
+### Modal de creación de tarea
+
+TaskerApp incluye un modal para crear nuevas tareas, permitiendo cargar título, descripción, prioridad, estado y fecha de vencimiento.
+
+<p align="center">
+  <img src="docs/images/modal-crear-tarea.jpeg" alt="Modal de creación de tarea en TaskerApp" width="900">
+</p>
+
+---
+
+### Vista calendario
+
+La vista calendario permite visualizar las tareas distribuidas por fecha de vencimiento, facilitando la planificación mensual.
+
+<p align="center">
+  <img src="docs/images/calendario-tareas.jpeg" alt="Calendario de tareas en TaskerApp" width="900">
+</p>
 
 ---
 
@@ -82,19 +139,23 @@ TaskerApp está dividido en dos aplicaciones principales:
 ```txt
 TaskerApp
 ├── taskerApp
-└── taskerApp_frontend
+├── taskerApp_frontend
+└── docs
+    └── images
 ```
 
 | Carpeta              | Descripción                                 |
 | -------------------- | ------------------------------------------- |
 | `taskerApp`          | Backend desarrollado con Java y Spring Boot |
 | `taskerApp_frontend` | Frontend desarrollado con Angular           |
+| `docs/images`        | Imágenes utilizadas en el README            |
 
 ---
 
 ## Backend
 
 El backend expone una API REST para gestionar tareas.
+
 Está desarrollado con una arquitectura en capas, separando responsabilidades entre controladores, servicios, repositorios, DTOs, entidades y manejo de excepciones.
 
 ### Estructura principal del backend
@@ -145,6 +206,7 @@ taskerApp
 | `DTOs`       | Define los objetos de entrada y salida de la API    |
 | `Entity`     | Representa la tabla `tasks` en la base de datos     |
 | `Exceptions` | Centraliza el manejo de errores                     |
+| `Configs`    | Contiene configuraciones generales como CORS        |
 
 ---
 
@@ -175,6 +237,7 @@ springdoc.swagger-ui.path=/swagger-ui.html
 ```
 
 La configuración corresponde a un entorno local de desarrollo.
+
 Cada usuario debe reemplazar las credenciales de MySQL según su instalación.
 
 ---
@@ -532,16 +595,34 @@ export enum TaskStatus {
 
 ## Rutas del frontend
 
-| Ruta         | Descripción                                                             |
-| ------------ | ----------------------------------------------------------------------- |
-| `/dashboard` | Vista principal para listar, crear, editar, eliminar y gestionar tareas |
-| `/calendar`  | Vista calendario donde se muestran tareas según su fecha de vencimiento |
+| Ruta         | Descripción                                                                   |
+| ------------ | ----------------------------------------------------------------------------- |
+| `/dashboard` | Vista principal para listar, crear, editar, eliminar, buscar y filtrar tareas |
+| `/calendar`  | Vista calendario donde se muestran tareas según su fecha de vencimiento       |
 
 La ruta raíz redirige automáticamente a:
 
 ```txt
 /dashboard
 ```
+
+---
+
+## Filtros del frontend
+
+El dashboard incluye herramientas de filtrado para mejorar la gestión visual de tareas.
+
+Filtros disponibles:
+
+* Búsqueda por nombre.
+* Búsqueda por descripción.
+* Búsqueda por estado.
+* Filtro por prioridad.
+* Filtro por fecha desde.
+* Filtro por fecha hasta.
+* Filtro por rango de fechas.
+
+Estos filtros permiten encontrar tareas específicas sin modificar la información persistida en la base de datos.
 
 ---
 
@@ -661,9 +742,10 @@ http://localhost:4200
 3. El backend consulta la base de datos MySQL.
 4. Las tareas se muestran en pantalla.
 5. El usuario puede crear, editar, eliminar o cambiar el estado de una tarea.
-6. Cada operación se envía al backend mediante HTTP.
-7. El backend persiste los cambios en MySQL.
-8. El calendario muestra visualmente las tareas según su fecha de vencimiento.
+6. El usuario puede buscar y filtrar tareas por texto, prioridad o fecha.
+7. Cada operación de escritura se envía al backend mediante HTTP.
+8. El backend persiste los cambios en MySQL.
+9. El calendario muestra visualmente las tareas según su fecha de vencimiento.
 
 ---
 
@@ -677,8 +759,10 @@ Esta versión inicial incluye:
 * Frontend Angular conectado al backend.
 * Dashboard de tareas.
 * Modal de creación y edición.
-* Búsqueda por nombre.
+* Búsqueda por nombre, descripción o estado.
 * Filtro por prioridad.
+* Filtro por fecha desde el frontend.
+* Filtro por rango de fechas.
 * Cambio de estado desde edición.
 * Calendario visual de tareas.
 * Manejo básico de errores.
